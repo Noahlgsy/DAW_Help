@@ -1,0 +1,78 @@
+Daw Help
+
+DAW 
+
+
+
+Bdd : 
+Créer une base et une table (ligne de commande dans api) : 
+
+sqlite3 ma_base.db
+
+CREATE TABLE ma_table(
+	id INTEGER PRIMARY KEY, 
+	hostname TEXT NOT NULL UNIQUE, 
+	etc…
+); 
+
+Insérer des données : 
+
+INSERT INTO table (nom_colonne_1, nom_colonne_2, ...
+ VALUES ('valeur 1', 'valeur 2', ...)
+
+npm install better-sqlite3
+npm i --save-dev @types/better-sqlite3
+
+import Sqlite3 from "better-sqlite3";
+
+const db = Sqlite3("database/app.sqlite"); //better-sqlite3 le crée automatiquement. meme s'ils n'existent pas
+
+db.pragma("foreign_keys = ON"); 
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL, 
+    last_name TEXT NOT NULL, 
+    mail TEXT NOT NULL, 
+    password TEXT NOT NULL
+  ); 
+  `); 
+
+  export default db; 
+
+Et dans mon fichier index.ts, ajouter “import db from "./database.js”;”
+
+
+Front : 
+À la racine, faire un “npm create vite@latest”, choisir vanilla, projet front.
+Supp tout à part “import './style.css' “ dans le main.js
+
+
+
+Back: 
+Se placer dans api, Créez un sous dossier src dans le dossier api.
+Installez TypeScript : 
+npm install -D typescript
+npx tsc --init
+Dans tsconfig.json editez : 
+"rootDir": "./src",
+"outDir": "./dist",
+Modifiez à false les paramètres sourceMap, declaration, declarationMap et verbatimModuleSyntax.
+Puis, Créez un fichier index.ts dans le dossier src de votre projet.
+Puis avec dans /src, faire un npx tsc -w 
+On est dans /dist, on lance : node index.js 
+Dans api : “npm i fastify” et  “npm i @fastify/cors”
+
+import Fastify from "fastify";
+
+const fastify = Fastify();
+fastify.get("/", (request, reply) => {
+reply.send("Hello World !");
+});
+//Démarre le serveur Web qui écoutera sur le port 8080
+fastify.listen({port : 8080});
+
+
+
+Architecture globa: 
